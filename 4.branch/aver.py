@@ -1,12 +1,10 @@
 num = int(input())
-s1, s2, s3 = input().split(' ')
-list = [int(s1), int(s2), int(s3)]
+list = input()
+list = list.split(' ')
+list = [int(i) for i in list]
 max = max(list)
 total = 0
 for i in list:
-    if (int(i / max) != 1):
-        total += i / max * 100
-    else:
-        total += max
+    total += i / max * 100
 
-print(round(total / num, 2))
+print("%.2f" % round(total / num, 2))
