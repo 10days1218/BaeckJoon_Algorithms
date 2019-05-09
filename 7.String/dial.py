@@ -24,11 +24,3 @@ for i in string:
         time += 11
 
 print(time)
-    
-    
-    
-    
-        
-    
-    
-    
