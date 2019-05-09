@@ -1,7 +1,7 @@
 /*
 #2292 
 */
-#include<iostream>
+#include <iostream>
 
 // 2 +   6(1*6) -1 = 7  2번
 // 8 +  12(2*6) -1 = 19 3번
