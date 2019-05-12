@@ -21,7 +21,7 @@ int main(void)
     }
 
     int index = num - (total - count) - 1;
-
+''
     if (count % 2 == 0)
     {
         n1 = 1;
