@@ -1,3 +1,4 @@
+//#2775
 #include <iostream>
 using namespace std;
 
@@ -5,36 +6,34 @@ int main(void)
 {
     int num = 0;
     cin >> num;
-    int *apart = new int[num * 2];
+    int *in1 = new int[num];
+    int *in2 = new int[num];
     int maximum = 0;
 
-    for (int i = 0; i < num * 2; i++)
+    for (int i = 0; i < num; i++)
     {
-        cin >> apart[i];
-        if (i % 2 == 0)
-        {
-            maximum = max(maximum, apart[i]);
-        }
+        cin >> in1[i];
+        cin >> in2[i];
     }
 
-    int array[14][14] = {0};
+    int array[15][15] = {0};
 
-    for (int i = 1; i <= 14; i++)
-        array[0][i - 1] = i;
-
-    for (int i = 1; i <= maximum; i++)
+    for (int i = 0; i < 15; i++)
     {
-        for (int j = 0; j < 14; j++)
-        {
-            for (int k = 0; k <= j; k++)
-                array[i][j] += array[i - 1][k];
-        }
+        array[0][i] = i + 1;
+        array[i][0] = 1;
     }
 
-    for (int i = 0; i < num * 2; i += 2)
+    for (int i = 1; i < 15; i++)
     {
-        int index1 = apart[i];
-        int index2 = apart[i + 1];
+        for (int j = 1; j < 15; j++)
+            array[i][j] = array[i - 1][j] + array[i][j - 1];
+    }
+
+    for (int i = 0; i < num; i++)
+    {
+        int index1 = in1[i];
+        int index2 = in2[i];
         cout << array[index1][index2 - 1] << endl;
     }
 
