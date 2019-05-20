@@ -11,60 +11,60 @@ int main(void)
     string str = to_string(roomNumber);
     int len = str.length();
 
-    int *num = new int[len];
-    int div = 1;
+    // int *num = new int[len];
+    // int div = 1;
 
-    for (int i = 0; i < len - 1; i++)
-        div *= 10;
+    // for (int i = 0; i < len - 1; i++)
+    //     div *= 10;
 
-    for (int i = 0; i < len; i++)
-    {
-        if (i == len - 1)
-            num[i] = roomNumber % 10;
+    // for (int i = 0; i < len; i++)
+    // {
+    //     if (i == len - 1)
+    //         num[i] = roomNumber % 10;
 
-        else
-        {
-            num[i] = roomNumber / div;
-            roomNumber = roomNumber % div;
-        }
+    //     else
+    //     {
+    //         num[i] = roomNumber / div;
+    //         roomNumber = roomNumber % div;
+    //     }
 
-        div /= 10;
-    }
+    //     div /= 10;
+    // }
 
     int number[9] = {0};
 
     for (int i = 0; i < len; i++)
     {
-        switch (num[i])
+        switch (str[i])
         {
-        case 0:
+        case '0':
             number[0] += 1;
             break;
-        case 1:
+        case '1':
             number[1] += 1;
             break;
-        case 2:
+        case '2':
             number[2] += 1;
             break;
-        case 3:
+        case '3':
             number[3] += 1;
             break;
-        case 4:
+        case '4':
             number[4] += 1;
             break;
-        case 5:
+        case '5':
             number[5] += 1;
             break;
-        case 6:
+        case '6':
             number[6] += 1;
             break;
-        case 7:
+        case '7':
             number[7] += 1;
             break;
-        case 8:
+        case '8':
             number[8] += 1;
             break;
-        case 9:
+        case '9':
             number[6] += 1;
             break;
         }
