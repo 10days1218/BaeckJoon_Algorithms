@@ -10,27 +10,6 @@ int main(void)
 
     string str = to_string(roomNumber);
     int len = str.length();
-
-    // int *num = new int[len];
-    // int div = 1;
-
-    // for (int i = 0; i < len - 1; i++)
-    //     div *= 10;
-
-    // for (int i = 0; i < len; i++)
-    // {
-    //     if (i == len - 1)
-    //         num[i] = roomNumber % 10;
-
-    //     else
-    //     {
-    //         num[i] = roomNumber / div;
-    //         roomNumber = roomNumber % div;
-    //     }
-
-    //     div /= 10;
-    // }
-
     int number[9] = {0};
 
     for (int i = 0; i < len; i++)
