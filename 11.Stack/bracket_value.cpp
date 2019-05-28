@@ -16,16 +16,28 @@ int main(void)
         if (str.at(i) == "(" || str.at(i) == "[")
             stack.push(str.at(i));
 
-        if (str.at(i) == ")" && str.top() == "(")
+        if (str.at(i) == ")")
         {
-            stack.pop();
-            stack.push("2");
+            if (stack.top() == "(")
+            {
+                stack.pop();
+                stack.push("2");
+            }
+            else
+            {
+                if ()
+            }
         }
 
-        if (str.at(i) == "]" && str.top() == "[")
+        if (str.at(i) == "]")
         {
-            stack.pop();
-            stack.push("3");
+            if (stack.top() == "[")
+            {
+                stack.pop();
+                stack.push("3");
+            }
         }
-        return 0;
     }
+
+    return 0;
+}
