@@ -34,7 +34,7 @@ int main(void)
 
         if (str.at(i) == ')')
         {
-            if (stack.top() == "(")
+            if (!stack.empty() && stack.top() == "(")
             {
                 stack.pop();
                 stack.push("2");
@@ -47,7 +47,7 @@ int main(void)
 
         if (str.at(i) == ']')
         {
-            if (stack.top() == "[")
+            if (!stack.empty() && stack.top() == "[")
             {
                 stack.pop();
                 stack.push("3");
@@ -82,7 +82,7 @@ int main(void)
 
 int innerLoop(stack<string> *stack, string s1, string s2, int value)
 {
-    int total = 0;
+    int total = -1;
 
     while (!stack->empty())
     {
@@ -100,6 +100,8 @@ int innerLoop(stack<string> *stack, string s1, string s2, int value)
         }
         else
         {
+            if (total == -1)
+                total = 0;
             total += atoi(c_top.c_str());
             stack->pop();
         }
