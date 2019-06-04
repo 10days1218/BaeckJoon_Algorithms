@@ -1,22 +1,34 @@
 //#11866
 #include <iostream>
-#include <vector>
+#include <queue>
 using namespace std;
 
 int main(void)
 {
     int N, M;
-    vector<int> v;
+    queue<int> q;
     cin >> N >> M;
     int index = 0;
-    v.resize(N);
+    int count = 0;
 
-    for (int i = 0; i < N; i++)
-        v[i] = i + 1;
+    for (int i = 1; i <= N; i++)
+        q.push(i);
 
-    while (1)
+    cout << "<";
+
+    while (!q.empty())
     {
-        ;
+        for (int i = 0; i < M - 1; i++)
+        {
+            q.push(q.front());
+            q.pop();
+        }
+        cout << q.front();
+        q.pop();
+        if (!q.empty())
+            cout << ", ";
     }
+
+    cout << ">" << endl;
     return 0;
 }
