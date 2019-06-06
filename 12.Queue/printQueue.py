@@ -9,8 +9,10 @@ for i in range(0, num):
     tmp = input().split(' ')
     list_n.append(int(tmp[0]))
     lit_m.append(int(tmp[1]))
-    queue = input().split(' ')
+    tmp_q = input().split(' ')
+    queue.append(tmp_q)
 
 for i in range(0,num):
+    
     
 
