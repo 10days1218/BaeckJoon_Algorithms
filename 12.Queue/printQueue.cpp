@@ -21,10 +21,10 @@ int main(void)
             q.push({j, tmp});
             pq.push(tmp);
         }
-        whie(!q.empty())
+        while (!q.empty())
         {
-            int idx = q.front().first();
-            int val = q.front().second();
+            int idx = q.front().first;
+            int val = q.front().second;
             q.pop();
             if (pq.top() == val)
             {
@@ -38,7 +38,7 @@ int main(void)
             }
             else
             {
-                q.push(idx, val);
+                q.push({idx, val});
             }
         }
     }
