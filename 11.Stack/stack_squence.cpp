@@ -9,8 +9,9 @@ int main(void)
     int t_case = 0;
     vector<int> v;
     stack<int> s;
+    vector<char> str;
     cin >> t_case;
-    int cnt = 1;
+    int idx = 0;
 
     for (int i = 0; i < t_case; i++)
     {
@@ -19,32 +20,31 @@ int main(void)
         v.push_back(tmp);
     }
 
-    for (int i = 0; i < t_case; i++)
+    for (int i = 1; i <= t_case; i++)
     {
-        if (s.empty() || s.top() != v[i])
+        s.push(i);
+        str.push_back('+');
+        while (!s.empty() && s.top() == v[idx])
         {
-            while (1)
-            {
-                if (cnt > t_case)
-                {
-                    cout << "NO" << endl;
-                    return 0;
-                }
-                s.push(cnt++);
-                cout << "+" << endl;
-                if (s.top() == v[i])
-                {
-                    s.pop();
-                    cout << "-" << endl;
-                    break;
-                }
-            }
-        }
-        if (s.top() == v[i])
-        {
+            idx++;
             s.pop();
-            cout << "-" << endl;
+            str.push_back('-');
         }
     }
+
+    if (!s.empty())
+    {
+        cout << "NO\n";
+        return 0;
+    }
+    else
+    {
+        for (vector<int>::size_type i = 0; i < str.size(); ++i)
+        {
+            cout << str[i];
+            cout << "\n";
+        }
+    }
+
     return 0;
 }
