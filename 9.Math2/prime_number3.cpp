@@ -24,7 +24,7 @@ int main(void)
     for (int i = M; i < N + 1; i++)
     {
         if (v[i] == true)
-            cout << i << '\n'
+            cout << i << '\n';
     }
 
     return 0;
