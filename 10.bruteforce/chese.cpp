@@ -2,78 +2,74 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int countPaint(char, int, int, vector<vector<char>> &v);
+vector<string> v;
+string white[8] = {
+    {"WBWBWBWB"},
+    {"BWBWBWBW"},
+    {"WBWBWBWB"},
+    {"BWBWBWBW"},
+    {"WBWBWBWB"},
+    {"BWBWBWBW"},
+    {"WBWBWBWB"},
+    {"BWBWBWBW"}
+
+};
+
+string black[8] = {
+    {"BWBWBWBW"},
+    {"WBWBWBWB"},
+    {"BWBWBWBW"},
+    {"WBWBWBWB"},
+    {"BWBWBWBW"},
+    {"WBWBWBWB"},
+    {"BWBWBWBW"},
+    {"WBWBWBWB"}
+
+};
+
+int whiteFirst(int y, int x)
+{
+    int answer = 0;
+    for (int i = y; i < y + 8; i++)
+    {
+        for (int j = x; j < x + 8; j++)
+        {
+            if (v[i][j] != white[i - y][j - x])
+                answer++;
+        }
+    }
+
+    return answer;
+}
+
+int BlackFirst(int y, int x)
+{
+    int answer = 0;
+    for (int i = y; i < y + 8; i++)
+    {
+        for (int j = x; j < x + 8; j++)
+        {
+            if (v[i][j] != black[i - y][j - x])
+                answer++;
+        }
+    }
+    return answer;
+}
 int main(void)
 {
     int M, N = 0;
     cin >> N >> M;
-    vector<vector<char>> v(N, vector<char>(M, 0));
+    v.resize(N);
     int count = INT_MAX;
 
     for (int i = 0; i < N; i++)
-    {
-        string str;
-        cin >> str;
-        for (int j = 0; j < M; j++)
-            v[i][j] = str.at(j);
-    }
+        cin >> v[i];
 
-    for (int i = 0; i < N - 7; i++)
-    {
-        for (int j = 0; j < M - 7; j++)
-            count = min(count, countPaint(v[i][j], i, j, v));
-    }
+    for (int i = 0; i + 7 < N; i++)
+        for (int j = 0; j + 7 < M; j++)
+            count = min(count, min(whiteFirst(i, j), BlackFirst(i, j)));
 
     cout << count << '\n';
 
     return 0;
-}
-
-int countPaint(char start, int x, int y, vector<vector<char>> &v)
-{
-    int answer = 0;
-    int index = 0;
-
-    if (start == 'W')
-    {
-        string check1 = "WBWBWBWB";
-        string check2 = "BWBWBWBW";
-        for (int i = x; i < x + 8; i++)
-        {
-            for (int j = y; j < y + 8; j++)
-            {
-                if (i % 2 == 0)
-                    if (check1.at(index) != v[i][j])
-                        answer++;
-                if (i % 2 == 1)
-                    if (check2.at(index) != v[i][j])
-                        answer++;
-
-                index++;
-            }
-            index = 0;
-        }
-    }
-
-    if (start == 'B')
-    {
-        string check1 = "BWBWBWBW";
-        string check2 = "WBWBWBWB";
-        for (int i = x; i < x + 8; i++)
-        {
-            for (int j = y; j < y + 8; j++)
-            {
-                if (i % 2 == 0)
-                    if (check1.at(index) != v[i][j])
-                        answer++;
-                if (i % 2 == 1)
-                    if (check2.at(index) != v[i][j])
-                        answer++;
-
-                index++;
-            }
-            index = 0;
-        }
-    }
-    return answer;
 }
