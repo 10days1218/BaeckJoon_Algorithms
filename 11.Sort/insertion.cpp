@@ -2,11 +2,11 @@
 #include <iostream>
 #include <vector>
 using namespace std;
+
 int main(void)
 {
-    int num = 0;
+    int num, key, i, j = 0;
     vector<int> v;
-    int i_min = 0;
     cin >> num;
     v.resize(num);
 
@@ -15,9 +15,19 @@ int main(void)
         cin >> v[i];
     }
 
-    for (int i = 0; i < num - 1; i++)
+    for (i = 1; i < num; i++)
     {
-        i_min = 0;
-        for (int)
+        key = v[(j = i)];
+        while (--j >= 0 && key < v[j])
+        {
+            v[j + 1] = v[j];
+            v[j] = key;
+        }
     }
+
+    for (int i = 0; i < num; i++)
+        cout << v[i] << " ";
+    cout << '\n';
+
+    return 0;
 }
