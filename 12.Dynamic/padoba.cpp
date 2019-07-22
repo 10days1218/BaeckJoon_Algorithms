@@ -19,6 +19,5 @@ int main(void)
         }
         cout << v[tmp] << '\n';
     }
-
     return 0;
 }
