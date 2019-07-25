@@ -14,23 +14,10 @@ for i in range(0,n):
         else:
             s = str[1]
             cloth[s] = 1
-            
+
     l = cloth.values()
     for i in l:
         answer = answer * ( i + 1 )
     print(answer - 1)
     answer = 1
     cloth = {}
-
-
-
-
-        
-
-
-
-
-
-    
-
-    
