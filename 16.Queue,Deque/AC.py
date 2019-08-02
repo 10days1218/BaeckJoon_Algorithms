@@ -9,6 +9,7 @@ for i in range(0,n):
     command = list(input())
     length = int(input())
     li = input()
+
     if length == 0:
         li = []
         front = back = -1
@@ -28,19 +29,23 @@ for i in range(0,n):
             reverse = not reverse
 
         if command[j] == 'D':
-            if front != -1 and front != length:
-                if back > front:
-                    front +=1
-                else:
+            if front != -1 and front < length:
+                if reverse:
                     front -=1
+                    continue
+                else:
+                    front +=1
+                    continue
 
             if front == -1 or front == length:
                 li = -1
                 j = len_s
 
+    #print(str(front) +' '+ str(back))
     if li != -1:
-        if front == -1:
+        if front == -1 or front == length:
             print('[]')
+
         else:
             print('[', end = '')
             if reverse:
