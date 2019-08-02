@@ -4,14 +4,33 @@ using namespace std;
 
 int main(void)
 {
-    vector<int> operand;
-    vector<int> plus_minus;
-    string str;
+    string str, temp = "";
+    int len, ans = 0;
+    bool m = false;
+    cin >> str;
+    len = str.size();
 
-    getlint(cin, str);
-
-    for (int i = 0; i < str.size(); i++)
+    for (int i = 0; i <= len; i++)
     {
+        if (str[i] == '+' || str[i] == '-' || str[i] == '\0')
+        {
+            if (m == false)
+                ans += stoi(temp);
+
+            else
+                ans -= stoi(temp);
+
+            temp = "";
+
+            if (str[i] == '-')
+                m = true;
+
+            continue;
         }
+        else
+            temp += str[i];
+    }
+
+    cout << ans << '\n';
     return 0;
 }
