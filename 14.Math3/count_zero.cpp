@@ -27,7 +27,7 @@ int main(void)
 
                 tmp /= j;
             }
-                }
+        }
     }
 
     answer = min(a[0], a[1]);
