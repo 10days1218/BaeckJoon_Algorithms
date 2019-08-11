@@ -17,6 +17,9 @@ int solution(int cacheSize, vector<string> cities)
         std::transform(cities[i].begin(), cities[i].end(), cities[i].begin(), ::toupper);
     }
 
+    for (int i = 0; i < cacheSize; i++)
+        seq[i] = i;
+
     for (int i = 0; i < len; i++)
     {
         check = true;
@@ -26,61 +29,56 @@ int solution(int cacheSize, vector<string> cities)
             answer = 5 * len;
             break;
         }
-        if (i < cacheSize)
-        {
-            cache[i] = cities[i];
-            answer += 5;
-            seq[i] = i;
-        }
 
-        else
+        for (int j = 0; j < cacheSize; j++)
         {
-            for (int j = 0; j < cacheSize; j++)
+            if (cache[j] == cities[i])
             {
-                if (cache[j] == cities[i])
+                int tmp = j;
+                for (int k = 0; k < cacheSize; k++)
                 {
-                    int tmp = j;
-                    for (int k = 0; k < cacheSize; k++)
+                    if (seq[k] == j)
                     {
-                        if (seq[k] == j)
+                        for (int l = k; l < cacheSize - 1; l++)
                         {
-                            for (int l = k; l < cacheSize - 1; l++)
-                            {
-                                seq[k] = seq[k + 1];
-                            }
-                            seq[cacheSize - 1] = tmp;
-                            //continue;
+                            seq[k] = seq[k + 1];
                         }
+                        seq[cacheSize - 1] = tmp;
+                        //continue;
                     }
-                    answer += 1;
-                    j = cacheSize + 1;
-                    check = false;
                 }
-            }
-
-            if (check == true)
-            {
-                int idx = seq[0];
-                cache[idx] = cities[i];
-                for (int j = 0; j < cacheSize - 1; j++)
-                {
-                    seq[j] = seq[j + 1];
-                }
-                seq[cacheSize - 1] = idx;
-                answer += 5;
+                answer += 1;
+                j = cacheSize + 1;
+                check = false;
             }
         }
+
+        if (check == true)
+        {
+            int idx = seq[0];
+            cache[idx] = cities[i];
+            for (int j = 0; j < cacheSize - 1; j++)
+            {
+                seq[j] = seq[j + 1];
+            }
+            seq[cacheSize - 1] = idx;
+            answer += 5;
+        }
+
+        for (int t = 0; t < cacheSize; t++)
+            cout << seq[t] << " ";
+        cout << '\n';
     }
 
     return answer;
 }
 int main(void)
 {
-    int n = 0;
+    int n = 5;
     vector<string> cities = //{"Jeju", "Pangyo", "NewYork", "NewYork"};
         //{"Jeju", "Pangyo", "Seoul", "NewYork", "LA", "SanFrancisco", "Seoul", "Rome", "Paris", "Jeju", "NewYork", "Rome"};
         //{"Jeju","Pangyo","Seoul","NewYork","LA","Jeju","Pangyo","Seoul","NewYork","LA"};
-        {"Jeju", "Pangyo", "Seoul", "NewYork", "LA"};
-
+        //{"Jeju", "Pangyo", "Seoul", "NewYork", "LA"};
+        {"Jeju", "Jeju", "Jeju"};
     cout << solution(n, cities) << '\n';
 }
