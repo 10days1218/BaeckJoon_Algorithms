@@ -3,36 +3,26 @@
 using namespace std;
 
 int n;
+int cnt = 0;
 int maps[26][26];
+int dir_X[4] = {0, 1, 0, -1};
+int dir_Y[4] = {1, 0, -1, 0};
 bool visited[26][26] = {false};
 vector<int> ans;
 
-void bfs(int x, int y)
+void dfs(int x, int y)
 {
-    queue<pair<int, int>> q;
-    q.push(make_pair(x, y));
-    int count = 0;
-    while (!q.empty())
+    visited[x][y] = true;
+    cnt++;
+    for (int i = 0; i < 4; i++)
     {
-        int newX = q.front().first;
-        int newY = q.front().second;
-        q.pop();
-
-        if (newX >= 0 && newX < n && newY >= 0 && newY < n && maps[newX][newY] == 1)
+        int newX = x + dir_X[i];
+        int newY = y + dir_Y[i];
+        if (newX >= 0 && newX < n && newY >= 0 && newY < n && visited[newX][newY] == false && maps[newX][newY])
         {
-            if (visited[newX][newY] == false)
-            {
-                count++;
-                visited[newX][newY] = true;
-                q.push(make_pair(newX, newY + 1));
-                q.push(make_pair(newX + 1, newY));
-                q.push(make_pair(newX, newY - 1));
-                q.push(make_pair(newX - 1, newY));
-            }
+            dfs(newX, newY);
         }
     }
-
-    ans.push_back(count);
 }
 
 int main(void)
@@ -55,7 +45,9 @@ int main(void)
         {
             if (maps[i][j] == 1 && visited[i][j] == false)
             {
-                bfs(i, j);
+                dfs(i, j);
+                ans.push_back(cnt);
+                cnt = 0;
             }
         }
     }
