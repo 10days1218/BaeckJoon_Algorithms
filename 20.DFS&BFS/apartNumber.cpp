@@ -13,34 +13,27 @@ void bfs(int x, int y)
 {
     queue<pair<int, int>> q;
     q.push(make_pair(x, y));
-    visited[x][y] = true;
     int count = 0;
     while (!q.empty())
     {
         int newX = q.front().first;
         int newY = q.front().second;
         q.pop();
-        for (int i = 0; i < 4; i++)
+
+        if (newX >= 0 && newX < n && newY >= 0 && newY < n && maps[newX][newY] == 1)
         {
-            newX = newX + dir_X[i];
-            newY = newY + dir_Y[i];
-            if (newX >= 0 && newX < n && newY >= 0 && newY < n && maps[newX][newY] == 1)
+            if (visited[newX][newY] == false)
             {
-                if (visited[newX][newY])
-                    continue;
-                else
-                {
-                    q.push(make_pair(newX, newY));
-                    count++;
-                    visited[newX][newY] = true;
-                    q.push(make_pair(newX, newY + 1));
-                    q.push(make_pair(newX + 1, newY));
-                    q.push(make_pair(newX, newY - 1));
-                    q.push(make_pair(newX - 1, newY));
-                }
+                count++;
+                visited[newX][newY] = true;
+                q.push(make_pair(newX, newY + 1));
+                q.push(make_pair(newX + 1, newY));
+                q.push(make_pair(newX, newY - 1));
+                q.push(make_pair(newX - 1, newY));
             }
         }
     }
+
     ans.push_back(count);
 }
 
@@ -48,13 +41,13 @@ int main(void)
 {
     cin >> n;
 
-    for (int i = 0; i < 7; i++)
+    for (int i = 0; i < n; i++)
     {
         string tmp;
         cin >> tmp;
-        for (int j = 0; j < 7; j++)
+        for (int j = 0; j < n; j++)
         {
-            maps[i][j] = atoi(&tmp[j]);
+            maps[i][j] = tmp[j] - '0';
         }
     }
 
