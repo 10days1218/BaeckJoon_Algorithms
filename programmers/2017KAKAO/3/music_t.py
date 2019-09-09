@@ -9,7 +9,7 @@ def changShop(notes):
 
 
 def solution(m, musicinfos):
-    answer = "None"
+    answer = "(None)"
     musics = []
     Music = ""
     music_long = 0
