@@ -1,22 +1,25 @@
 //#11725
-#include <bits/stdc++h>
+#include <bits/stdc++.h>
 using namespace std;
 
-const int max = 1001;
-bool visit[max];
-vector<int> adj[max];
-queue<int> Q;
-
-void DFS(int x)
+const int MAX = 100000 + 1;
+int n;
+vector<int> tree[MAX];
+int parent[MAX];
+bool visit[MAX];
+void dfs(int node)
 {
-    visit[x] = true;
-    cout << x << ' ';
+    visit[node] = true;
 
-    for(int i )
-}
-
-void BFS(int sx)
-{
+    for (int i = 0; i < tree[node].size(); i++)
+    {
+        int next = tree[node][i];
+        if (!visit[next])
+        {
+            parent[next] = node;
+            dfs(next);
+        }
+    }
 }
 
 int main(void)
@@ -24,19 +27,19 @@ int main(void)
     ios_base ::sync_with_stdio(false);
     cin.tie(NULL);
 
-    int N, M, V;
-    cin >> N >> M >> V;
+    cin >> n;
 
-    for (int i = 0; i < M; i++)
+    for (int i = 0; i < n - 1; i++)
     {
-        int s, e;
-        cin >> s >> e;
-        adj[s].push_back(e);
-        adj[e].push_back(s);
+        int p, c;
+        cin >> p >> c;
+        tree[p].push_back(c);
+        tree[c].push_back(p);
     }
 
-    for (int i = 0; i <= n; i++)
-        sort(adj[i].begin(), adj[i].end());
+    dfs(1);
+    for (int i = 2; i <= n; i++)
+        cout << parent[i] << '\n';
 
     return 0;
 }
