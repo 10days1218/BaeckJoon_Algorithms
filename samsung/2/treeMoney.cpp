@@ -3,9 +3,9 @@
 using namespace std;
 
 int n, m, k;
-int maps[10][10];
-int add[10][10];
-const int dy[] = {-1, -1, -1, 0, 1, 1, 1, 1};
+int maps[11][11];
+int add[11][11];
+const int dy[] = {-1, -1, -1, 0, 0, 1, 1, 1};
 const int dx[] = {-1, 0, 1, -1, 1, -1, 0, 1};
 struct TREE
 {
@@ -21,76 +21,88 @@ int main(void)
 {
     cin >> n >> m >> k;
 
-    for (int i = 0; i < n; i++)
+    for (int i = 1; i <= n; i++)
     {
-        for (int j = 0; j < n; j++)
+        for (int j = 1; j <= n; j++)
         {
             cin >> add[i][j];
             maps[i][j] = 5;
         }
     }
 
-    for (int i = 0; i < k; i++)
+    for (int i = 0; i < m; i++)
     {
         int r, c, a;
-        cin >> r >> c >> a;
-        tree.y = r, tree.x = c, tree.age = a;
+        TREE tree;
+        cin >> tree.y >> tree.x >> tree.age;
+        trees.push(tree);
     }
 
     while (k--)
     {
-        queue<TREE> dead_tree, five;
+        queue<TREE> dead,five,total;
 
-        for (int i = 0; i < new_tree.size(); i++)
-        {
+        while(!new_tree.empty()){
             TREE t = new_tree.front();
             new_tree.pop();
-            if (maps[i][j] >= t.age)
-            {
-                maps[i][j] -= t.age;
+            int r = t.y, c = t.x  ;
+            if(maps[r][c] >= t.age){
+                maps[r][c] -= t.age;
                 t.age++;
-                trees.push(t);
-                if (t.age % 5 == 0)
-                    five.push(t);
+                total.push(t);
             }
-            else
-            {
-                dead_tree(t);
+            else{
+                dead.push(t);
             }
         }
 
-        new_tree.clear();
-
-        for (int i = 0; i < trees.size(); i++)
-        {
+        int cnt = trees.size();
+        while(!trees.empty()){
             TREE t = trees.front();
             trees.pop();
-            if (maps[i][j] >= t.age)
-            {
-                maps[i][j] -= t.age;
+            int r = t.y, c = t.x  ;
+            if(maps[r][c] >= t.age){
+                maps[r][c] -= t.age;
                 t.age++;
-                trees.push(t);
-                if (t.age % 5 == 0)
+                total.push(t);
+                if(t.age % 5 == 0){
                     five.push(t);
+                }
             }
-            else
-            {
-                dead_tree(t);
+            else{
+                dead.push(t);
+            }
+        }
+        
+        while(!dead.empty()){
+            TREE t  = dead.front();
+            dead.pop();
+            int r = t.y, c = t.x, a = t.age;
+            maps[r][c] += a / 2;
+        }
+
+        while(!five.empty()){
+            TREE t = five.front();
+            five.pop();
+            for(int dir = 0; dir < 8; dir++){
+                int ny = t.y + dy[dir], nx = t.x + dx[dir];
+                if(ny <= 0 || ny > n || nx <= 0 || nx > n)
+                    continue;
+                TREE n;
+                n.y = ny, n.x = nx, n.age = 1;
+                new_tree.push(n);
             }
         }
 
-        for (int i = 0; i < five.size(); i++)
-        {
-            TREE t = five.front();
-            five.pop();
-            for (int dir = 0; dir < 8; dir++)
-            {
-                int ny = t.y + dy[dir], nx = t.x + dx[dir];
-                if (ny < 0 || ny >= n || nx < 0 || nx >= 0)
-                    continue;
+        for(int r = 1; r <= n; r++){
+            for(int c = 1; c <= n; c++){
+                maps[r][c] += add[r][c];
             }
         }
+        trees = total;
     }
+
+    cout << new_tree.size() + trees.size() << '\n';
 
     return 0;
 }
