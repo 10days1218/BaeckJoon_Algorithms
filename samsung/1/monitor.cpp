@@ -11,19 +11,72 @@ struct CCTV
 
 int n, m;
 int maps[8][8];
-const int dy[] = {-1, 0, 1, 0};
-const int dx[] = {0, 1, 0, -1};
+int copy_maps[8][8];
+const int cctvTime[] = {4, 2, 4, 4, 1};
 vector<CCTV> v;
 vector<int> angle;
+int f_cnt = 0;
 int ans = INT_MAX;
+
+void updateBoard(int dir, CCTV t)
+{
+    dir = dir % 4;
+    int r = t.y;
+    int c = t.x;
+
+    if (dir == 0)
+    {
+        for (int i = c + 1; i < m; i++)
+        {
+            if (copy_maps[r][i] == 6)
+                break;
+            if (copy_maps[r][i] == 0)
+                copy_maps[r][i] = -1;
+        }
+    }
+
+    else if (dir == 1)
+    {
+        for (int i = 0; i < r; i++)
+        {
+            if (copy_maps[i][c] == 6)
+                break;
+            if (copy_maps[i][c] == 0)
+                copy_maps[i][c] = -1;
+        }
+    }
+
+    else if (dir == 2)
+    {
+        for (int i = 0; i < c; i++)
+        {
+            if (copy_maps[r][i] == 6)
+                break;
+            if (copy_maps[r][i] == 0)
+                copy_maps[r][i] = -1;
+        }
+    }
+
+    else if (dir == 3)
+    {
+        for (int i = r + 1; i < n; i++)
+        {
+            if (copy_maps[i][c] == 6)
+                break;
+            if (copy_maps[i][c] == 0)
+                copy_maps[i][c] = -1;
+        }
+    }
+}
 
 int countBlank()
 {
     int ret = 0;
-    int copy_maps[8][8];
+    fill_n(copy_maps[0], 8 * 8, 0);
+
     for (int i = 0; i < n; i++)
     {
-        for (int j = 0; j < n; j++)
+        for (int j = 0; j < m; j++)
         {
             copy_maps[i][j] = maps[i][j];
         }
@@ -33,296 +86,43 @@ int countBlank()
     {
         CCTV t = v[i];
         int dir = angle[i];
+
         if (t.type == 1)
         {
-            int r = t.x, c = t.x;
-            while (r < m || c < n)
-            {
-                r += dy[dir], c += dx[dir];
-                if (maps[r][c] == 6)
-                    break;
-                if (maps[r][c] == 0)
-                    maps[r][c] = -1;
-            }
+            updateBoard(dir, t);
         }
 
         if (t.type == 2)
         {
-            int r = t.x, c = t.y;
-            if (dir == 1 || dir == 3)
-            {
-                for (int i = 0; i < c; i++)
-                {
-                    if (maps[r][i] == 6)
-                        break;
-                    if (maps[r][i] == 0)
-                        maps[r][i] = -1;
-                }
-
-                for (int i = c + 1; i < m; i++)
-                {
-                    if (maps[r][i] == 6)
-                        break;
-                    if (maps[r][i] == 0)
-                        maps[r][i] = -1;
-                }
-            }
-
-            if (dir == 0 || dir == 2)
-            {
-                for (int i = 0; i < r; i++)
-                {
-                    if (maps[i][c] == 6)
-                        break;
-                    if (maps[i][c] == 0)
-                        maps[i][c] = -1;
-                }
-
-                for (int i = r + 1; i < n; i++)
-                {
-                    if (maps[i][c] == 6)
-                        break;
-                    if (maps[i][c] == 0)
-                        maps[i][c] = -1;
-                }
-            }
+            updateBoard(dir, t);
+            updateBoard(dir + 2, t);
         }
 
         if (t.type == 3)
         {
-            int r = t.x, c = t.y;
-            if (dir == 0)
-            {
-                for (int i = r - 1; i >= 0; i--)
-                {
-                    if (maps[i][c] == 6)
-                        break;
-
-                    if (maps[i][c] == 0)
-                        maps[i][c] = -1;
-                }
-
-                for (int i = c + 1; i < m; i++)
-                {
-                    if (maps[r][i] == 6)
-                        break;
-                    if (maps[r][i] == 0)
-                        maps[r][i] = -1;
-                }
-            }
-
-            if (dir == 1)
-            {
-                for (int i = c + 1; i < m; i++)
-                {
-                    if (maps[r][i] == 6)
-                        break;
-                    if (maps[r][i] == 0)
-                        maps[r][i] = -1;
-                }
-
-                for (int i = r + 1; i < n; i++)
-                {
-                    if (maps[i][c] == 6)
-                        break;
-                    if (maps[i][c] == 0)
-                        maps[i][c] = -1;
-                }
-            }
-
-            if (dir == 2)
-            {
-                for (int i = c - 1; i >= 0; i++)
-                {
-                    if (maps[i][c] == 6)
-                        break;
-                    if (maps[i][c] == 0)
-                        maps[i][c] = -1;
-                }
-
-                for (int i = r + 1; i < n; i++)
-                {
-                    if (maps[i][c] == 6)
-                        break;
-                    if (maps[i][c] == 0)
-                        maps[i][c] = -1;
-                }
-            }
-
-            if (dir == 3)
-            {
-                for (int i = c - 1; i >= 0; i++)
-                {
-                    if (maps[i][c] == 6)
-                        break;
-                    if (maps[i][c] == 0)
-                        maps[i][c] = -1;
-                }
-
-                for (int i = r - 1; i >= 0; i--)
-                {
-                    if (maps[i][c] == 6)
-                        break;
-
-                    if (maps[i][c] == 0)
-                        maps[i][c] = -1;
-                }
-            }
+            updateBoard(dir, t);
+            updateBoard(dir + 1, t);
         }
 
         if (t.type == 4)
         {
-            int r = t.x, c = t.y;
-            if (dir == 0)
-            {
-                for (int i = r - 1; i >= 0; i--)
-                {
-                    if (maps[i][c] == 6)
-                        break;
-
-                    if (maps[i][c] == 0)
-                        maps[i][c] = -1;
-                }
-
-                for (int i = 0; i < c; i++)
-                {
-                    if (maps[r][i] == 6)
-                        break;
-                    if (maps[r][i] == 0)
-                        maps[r][i] = -1;
-                }
-
-                for (int i = c + 1; i < m; i++)
-                {
-                    if (maps[r][i] == 6)
-                        break;
-                    if (maps[r][i] == 0)
-                        maps[r][i] = -1;
-                }
-            }
-
-            if (dir == 1)
-            {
-                for (int i = c + 1; i < m; i++)
-                {
-                    if (maps[r][i] == 6)
-                        break;
-                    if (maps[r][i] == 0)
-                        maps[r][i] = -1;
-                }
-
-                for (int i = 0; i < r; i++)
-                {
-                    if (maps[i][c] == 6)
-                        break;
-                    if (maps[i][c] == 0)
-                        maps[i][c] = -1;
-                }
-
-                for (int i = r + 1; i < n; i++)
-                {
-                    if (maps[i][c] == 6)
-                        break;
-                    if (maps[i][c] == 0)
-                        maps[i][c] = -1;
-                }
-            }
-
-            if (dir == 2)
-            {
-                for (int i = 0; i < c; i++)
-                {
-                    if (maps[r][i] == 6)
-                        break;
-                    if (maps[r][i] == 0)
-                        maps[r][i] = -1;
-                }
-
-                for (int i = c + 1; i < m; i++)
-                {
-                    if (maps[r][i] == 6)
-                        break;
-                    if (maps[r][i] == 0)
-                        maps[r][i] = -1;
-                }
-
-                for (int i = r + 1; i < n; i++)
-                {
-                    if (maps[i][c] == 6)
-                        break;
-                    if (maps[i][c] == 0)
-                        maps[i][c] = -1;
-                }
-            }
-
-            if (dir == 3)
-            {
-                for (int i = 0; i < r; i++)
-                {
-                    if (maps[i][c] == 6)
-                        break;
-                    if (maps[i][c] == 0)
-                        maps[i][c] = -1;
-                }
-
-                for (int i = r + 1; i < n; i++)
-                {
-                    if (maps[i][c] == 6)
-                        break;
-                    if (maps[i][c] == 0)
-                        maps[i][c] = -1;
-                }
-
-                for (int i = 0; i < c; i++)
-                {
-                    if (maps[r][i] == 6)
-                        break;
-                    if (maps[r][i] == 0)
-                        maps[r][i] = -1;
-                }
-            }
+            updateBoard(dir, t);
+            updateBoard(dir + 1, t);
+            updateBoard(dir + 2, t);
         }
 
-        if (t.type == 5)
+        if (t.type == 4)
         {
-            int r = t.x, c = t.y;
-            for (int i = 0; i < r; i++)
-            {
-                if (maps[i][c] == 6)
-                    break;
-                if (maps[i][c] == 0)
-                    maps[i][c] = -1;
-            }
-
-            for (int i = r + 1; i < n; i++)
-            {
-                if (maps[i][c] == 6)
-                    break;
-                if (maps[i][c] == 0)
-                    maps[i][c] = -1;
-            }
-
-            for (int i = 0; i < c; i++)
-            {
-                if (maps[r][i] == 6)
-                    break;
-                if (maps[r][i] == 0)
-                    maps[r][i] = -1;
-            }
-
-            for (int i = c + 1; i < m; i++)
-            {
-                if (maps[r][i] == 6)
-                    break;
-                if (maps[r][i] == 0)
-                    maps[r][i] = -1;
-            }
+            updateBoard(dir, t);
+            updateBoard(dir + 1, t);
+            updateBoard(dir + 2, t);
+            updateBoard(dir + 3, t);
         }
     }
 
     for (int i = 0; i < n; i++)
     {
-        for (int j = 0; j < n; j++)
+        for (int j = 0; j < m; j++)
         {
             if (copy_maps[i][j] == 0)
                 ret++;
@@ -330,22 +130,22 @@ int countBlank()
     }
     return ret;
 }
+
 void dfs(int cnt)
 {
     if (cnt == v.size())
     {
         int ret = countBlank();
-        ans = min(ans, ret);
+        if (ans > ret)
+            ans = ret;
+        return;
     }
 
-    for (int i = 0; i < v.size(); i++)
+    for (int j = 0; j < 4; j++)
     {
-        for (int j = 0; j < 4; j++)
-        {
-            angle.push_back(j);
-            dfs(cnt + 1);
-            angle.pop_back();
-        }
+        angle.push_back(j);
+        dfs(cnt + 1);
+        angle.pop_back();
     }
 }
 int main(void)
