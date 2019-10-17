@@ -2,71 +2,78 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int n, m, h;
-int totalCount = 0;
-bool maps[31][11] = {false};
-bool flag = true;
-void dfs(int y, int count)
-{
-    if (flag)
-        return;
+int n, m, h, ret;
+int maps[31][11];
 
-    if (totalCount == count)
+bool check()
+{
+    bool ret = true;
+
+    for (int i = 1; i <= n; i++)
     {
-        //bool check = true;
-        for (int i = 1; i <= n; i++)
+        int pos = i;
+
+        for (int j = 0; j <= h; j++)
         {
-            int ans = i;
-            for (int j = 0; j < h; j++)
+            if (maps[j][pos] == 1)
             {
-                if (maps[j][i])
-                    ans++;
-                if (!maps[j][i] && ans > 1 && maps[j][ans - 1])
-                    ans--;
+                pos++;
             }
-            if (ans != i)
+            else if (maps[j][pos - 1] == 1)
             {
-                flag = false;
-                break;
+                pos--;
             }
         }
+        if (pos != i)
+            return ret = false;
+    }
+    return ret;
+}
+
+void dfs(int cnt, int y, int x)
+{
+    if (cnt >= ret)
+        return;
+
+    if (check())
+    {
+        ret = cnt;
         return;
     }
 
-    for (int i = y; i < h; i++)
+    if (cnt == 3)
+        return;
+
+    for (int i = y; i <= h; i++)
     {
-        for (int j = 1; j < n; j++)
+        for (int j = x; j < n; j++)
         {
-            if (!maps[y][j - 1] && !maps[y][j] && !maps[y][j + 1])
+            if (maps[i][j] == 0 && maps[i][j + 1] == 0 && maps[i][j - 1] == 0)
             {
-                maps[i][j] = true;
-                dfs(i, count + 1);
-                maps[i][j] = false;
+                maps[i][j] = 1;
+                dfs(cnt + 1, i, j);
+                maps[i][j] = 0;
             }
         }
+        x = 1;
     }
 }
+
 int main(void)
 {
     cin >> n >> m >> h;
+
     for (int i = 0; i < m; i++)
     {
         int a, b;
         cin >> a >> b;
-        maps[a - 1][b] = true;
+        maps[a][b] = 1;
     }
+    ret = 4;
+    dfs(0, 1, 1);
+    if (ret == 4)
+        ret = -1;
+    cout << ret << '\n';
 
-    for (int i = 0; i <= 3; i++)
-    {
-        totalCount = i;
-        dfs(0, 0);
-        if (flag)
-        {
-            cout << totalCount << '\n';
-            return 0;
-        }
-    }
-
-    cout << -1 << '\n';
     return 0;
 }
