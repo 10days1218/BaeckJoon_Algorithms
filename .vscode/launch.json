@@ -5,6 +5,16 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "(lldb) c++",
+      "type": "lldb",
+      "request": "launch",
+      "program": "${fileDirname}/a.out",
+      "cwd": "${workspaceFolder}",
+      "terminal": "external"
+      //"preLaunchTask": "build debug" ,
+    },
+
+    {
       "name": "(lldb) Launch",
       "type": "cppdbg",
       "request": "launch",
@@ -15,6 +25,8 @@
       "environment": [],
       "externalConsole": true,
       "MIMode": "lldb",
+      "miDebuggerPath": "/usr/local/Cellar/llvm/9.0.0/bin/lldb-mi",
+      "logging": { "engineLogging": true },
       "osx": {
         "command": "clang++",
         "args": ["-Wall", "main.cpp", "-v"],
@@ -32,28 +44,6 @@
             "message": 5
           }
         }
-      }
-    },
-    {
-      "name": "C++ Launch",
-      "type": "cppdbg",
-      "request": "launch",
-      "program": "${fileDirname}/a.out",
-      //"preLaunchTask": "build",
-      "internalConsoleOptions": "openOnSessionStart",
-      "logging": {
-        "moduleLoad": false,
-        "programOutput": true,
-        "trace": false
-      },
-      "showDisplayString": false,
-      "args": [],
-      "stopAtEntry": false,
-      "cwd": "${workspaceRoot}",
-      "environment": [],
-      "externalConsole": true, // set true to enable keyboard input
-      "osx": {
-        "MIMode": "lldb"
       }
     }
   ]
