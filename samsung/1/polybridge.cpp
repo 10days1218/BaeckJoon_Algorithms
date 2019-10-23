@@ -128,6 +128,10 @@ int main(void)
     int island_cnt = 1;
     cin >> n >> m;
 
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+
     for (int i = 0; i < n; i++)
     {
         for (int j = 0; j < m; j++)

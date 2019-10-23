@@ -52,6 +52,8 @@ int main(void)
             SHARK cur = q.front();
             q.pop();
 
+            //cout << cur.y << " " << cur.x << " " << cur.time << '\n';
+
             if (candi.time != -1 && candi.time < cur.time) // 가장 가까운 물고기가 없다
                 break;
 
