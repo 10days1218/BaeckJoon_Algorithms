@@ -9,7 +9,7 @@ void quad(int x, int y, int l)
 {
     char first = arr[x][y];
     bool check = true;
-    //cout << "(";
+
     for (int i = x; i < x + l; i++)
     {
         for (int j = y; j < y + l; j++)
