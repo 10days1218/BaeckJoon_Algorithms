@@ -1,7 +1,7 @@
 {
     "python.formatting.provider": "black",
     "python.linting.pylintEnabled": false,
-    "python.pythonPath": "C:\\Users\\HS\\AppData\\Local\\Programs\\Python\\Python36\\python.exe",
+    "python.pythonPath": "/usr/local/bin/python3",
     "files.associations": {
         "__bit_reference": "cpp",
         "__config": "cpp",
