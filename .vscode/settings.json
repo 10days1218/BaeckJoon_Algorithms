@@ -96,5 +96,6 @@
         "*.tcc": "cpp",
         "cuchar": "cpp",
         "memory_resource": "cpp"
-    }
+    },
+    "C_Cpp.errorSquiggles": "Enabled"
 }

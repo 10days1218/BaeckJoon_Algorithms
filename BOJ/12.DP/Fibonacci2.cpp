@@ -7,8 +7,9 @@ int main(void)
     int n;
     cin >> n;
 
-    arr[0] = 0;
-    arr[1] = 1;
+    // arr[0] = 0;
+    // arr[1] = 1;
+    cin >> arr[0] >> arr[1];
 
     for (int i = 2; i <= n; i++)
     {
