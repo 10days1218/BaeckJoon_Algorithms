@@ -7,6 +7,7 @@ for i in range(len(strList))
     ans,cnt = 0,0
     left, right = 0, len(strList[i]) - 1
     if strList[i][left] != strList[i][right]:
+        
 
     if left == right:
         if cnt == 0:
