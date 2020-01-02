@@ -26,12 +26,13 @@ int main(void)
 
         for (int k = 1; k <= m; k++)
         {
-            if (visited[k])
+            if (!visited[k])
                 cycle(k);
         }
 
         cout << m - cnt << '\n';
         fill(visited, visited + 100001, false);
+        fill(check, check + 100001, false);
         fill(student, student + 100001, 0);
         cnt = 0;
     }
