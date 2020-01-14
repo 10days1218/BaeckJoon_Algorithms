@@ -2,7 +2,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-;
+int numbers[20];
+
 int main(void)
 {
     int n, cmd;
