@@ -6,6 +6,7 @@ using namespace std;
 
 int main(void)
 {
+
     int num;
     vector<int> Queue;
     string *command;
