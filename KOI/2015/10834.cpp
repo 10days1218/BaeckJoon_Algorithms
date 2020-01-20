@@ -14,12 +14,16 @@ int main(void)
         cin >> a >> b >> c;
         if (a < b)
         {
-            answer = a == 1 ? b * answer : b / a * answer;
-            r = ;
+            answer = a == 1 ? b * answer : answer / a * b;
+            r = r == c ? r = 0 : r = 1;
         }
         else
         {
-                }
+            answer = answer / a * b;
+            r = r == c ? r = 0 : r = 1;
+        }
     }
+    cout << r << " " << answer << '\n';
+
     return 0;
 }
