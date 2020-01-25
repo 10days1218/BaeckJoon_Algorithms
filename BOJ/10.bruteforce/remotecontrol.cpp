@@ -3,6 +3,8 @@
 using namespace std;
 
 int remote[10];
+
+int check(int n);
 int main(void)
 {
     int n, m;
@@ -16,10 +18,19 @@ int main(void)
         remote[number] = 1;
     }
 
-    for (int i = 0; i <= 500000; i++)
+    int res = abs(n - 100);
+    for (int i = 0; i <= 1000000; i++)
     {
-        ;
+        int ch = i;
+        int len = check(ch);
+        if (len > 0)
+        {
+        }
     }
 
     return 0;
+}
+
+int check(int n)
+{
 }
