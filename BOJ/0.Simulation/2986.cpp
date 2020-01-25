@@ -5,17 +5,24 @@ using namespace std;
 int main(void)
 {
     int n;
+    int answer = 1;
     cin >> n;
 
     int count = 0;
-
-    for (int i = n - 1;; i--)
+    int i;
+    for (i = 1; i * i < n; i++)
     {
-        count += 1;
         if (n % i == 0)
-            break;
+        {
+            if (i != n && n / i != n && (answer < i || answer < n / i))
+                answer = i > n / i ? i : n / i;
+        }
     }
 
-    cout << count << '\n';
+    if (n == i * i)
+        if (answer < i)
+            answer = i;
+
+    cout << n - answer << '\n';
     return 0;
 }
