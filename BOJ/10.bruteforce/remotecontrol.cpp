@@ -25,6 +25,7 @@ int main(void)
         int len = check(ch);
         if (len > 0)
         {
+            int press =
         }
     }
 
