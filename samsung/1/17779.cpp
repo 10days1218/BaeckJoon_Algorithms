@@ -42,7 +42,7 @@ void check(int x, int y)
 
             for (int r = 0; r < x + d2; r++)
             {
-                
+                ;
             }
         }
     }
