@@ -31,7 +31,7 @@ int main(void)
 void check(int x, int y)
 {
     int d1, d2;
-    int maxValue = INT_MIN, minValue = INT_MAX;
+    int sum[5];
 
     for (d1 = 1; d1 < n; d1++)
     {
@@ -40,8 +40,9 @@ void check(int x, int y)
             if (x + d1 + d2 > n || y - d1 <= 0 || y + d2 > n)
                 continue;
 
+            fill(sum, sum + 5, 0);
             fill(&maps[0][0], &maps[0][0] + 21 * 21, 0);
-            int sum = 0;
+
             //경계선
             int i = 0;
             while (i <= d1)
@@ -59,7 +60,33 @@ void check(int x, int y)
                 i++;
             }
 
-            //for(int)
+            int count = 1;
+            for (int r = 1; r <= n; r++)
+            {
+                bool flag = false;
+                for (int c = 1; c <= n; c++)
+                {
+                    if (!flag && maps[r][c] == 5)
+                    {
+                        if (count == 1 || count == d1 + d2 + 1)
+                        {
+                            count++;
+                            break;
+                        }
+                        flag = true;
+                        continue;
+                    }
+
+                    else if (flag && maps[r][c] == 5)
+                    {
+                        count++;
+                        break;
+                    }
+
+                    else if (flag && maps[r][c] == 0)
+                        maps[r][c] = 5;
+                }
+            }
 
             //첫 번째 구역
             for (int r = 1; r < x + d1; r++)
@@ -68,14 +95,10 @@ void check(int x, int y)
                 {
                     if (maps[r][c] == 5)
                         break;
-                    sum += population[r][c];
-                    maps[r][c] = 1;
+
+                    sum[0] += population[r][c];
                 }
             }
-
-            maxValue = maxValue < sum ? sum : maxValue;
-            minValue = minValue > sum ? sum : minValue;
-            sum = 0;
 
             //두 번째 구역
             for (int r = 1; r <= x + d2; r++)
@@ -85,14 +108,10 @@ void check(int x, int y)
                     if (maps[r][c] == 5)
                         continue;
 
-                    sum += population[r][c];
-                    maps[r][c] = 2;
+                    sum[1] += population[r][c];
+                    // maps[r][c] = 2;
                 }
             }
-
-            maxValue = maxValue < sum ? sum : maxValue;
-            minValue = minValue > sum ? sum : minValue;
-            sum = 0;
 
             //세 번째 구역
             for (int r = x + d1; r <= n; r++)
@@ -102,14 +121,9 @@ void check(int x, int y)
                     if (maps[r][c] == 5)
                         break;
 
-                    sum += population[r][c];
-                    maps[r][c] = 3;
+                    sum[2] += population[r][c];
                 }
             }
-
-            maxValue = maxValue < sum ? sum : maxValue;
-            minValue = minValue > sum ? sum : minValue;
-            sum = 0;
 
             //네 번째 구역
             for (int r = x + d2 + 1; r <= n; r++)
@@ -118,28 +132,22 @@ void check(int x, int y)
                 {
                     if (maps[r][c] == 5)
                         continue;
-                    sum += population[r][c];
-                    maps[r][c] = 4;
+
+                    sum[3] += population[r][c];
                 }
             }
-
-            maxValue = maxValue < sum ? sum : maxValue;
-            minValue = minValue > sum ? sum : minValue;
-            sum = 0;
 
             for (int r = 1; r <= n; r++)
             {
                 for (int c = 1; c <= n; c++)
                 {
                     if (maps[r][c] == 5)
-                        sum += population[r][c];
+                        sum[4] += population[r][c];
                 }
             }
 
-            maxValue = maxValue < sum ? sum : maxValue;
-            minValue = minValue > sum ? sum : minValue;
-
-            answer = min(answer, maxValue - minValue);
+            sort(sum, sum + 5);
+            answer = min(answer, sum[4] - sum[0]);
         }
     }
 }
