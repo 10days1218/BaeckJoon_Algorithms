@@ -3,18 +3,19 @@
 using namespace std;
 
 int N, M, T;
-int gear[50][50];
-const int dy[] = {};
-const int dx[] = {};
+int gear[51][50];
+const int dy[] = {1, 0, -1, 0};
+const int dx[] = {0, 1, 0, -1};
 
 void turn(int x, int d, int k);
 int removeNumber();
 void addNumber();
 int main(void)
 {
+    int answer = 0;
     cin >> N >> M >> T;
 
-    for (int i = 0; i < N; i++)
+    for (int i = 1; i <= N; i++)
         for (int j = 0; j < M; j++)
             cin >> gear[i][j];
 
@@ -22,15 +23,18 @@ int main(void)
     {
         int x, d, k;
         cin >> x >> d >> k;
-        x = x - 1, k = k % M;
         turn(x, d, k);
         int count = removeNumber();
 
         if (count == 0)
-        {
             addNumber(); //double...
-        }
     }
+
+    for (int i = 1; i <= N; i++)
+        for (int j = 0; j < M; j++)
+            answer += gear[i][j];
+
+    cout << answer << '\n';
     return 0;
 }
 
@@ -38,7 +42,7 @@ void turn(int x, int d, int k)
 {
     for (int tc = 0; tc < k; tc++)
     {
-        for (int i = 0; i < N; i++)
+        for (int i = 1; i <= N; i++)
         {
             if (i % x != 0)
                 continue;
@@ -67,25 +71,89 @@ void turn(int x, int d, int k)
 int removeNumber()
 {
     int count = 0;
+    queue<pair<int, int>> Q;
 
-    for (int i = 0; i < N; i++)
+    for (int i = 1; i <= N; i++)
     {
         for (int j = 0; j < M; j++)
         {
+            queue<pair<int, int>> q;
+            int cnt = 0;
             int number = gear[i][j];
-            for (int dir = 0; dir < 5; dir++)
+
+            if (number == 0)
+                continue;
+
+            for (int dir = 0; dir < 4; dir++)
             {
                 int nY = i + dy[dir], nX = j + dx[dir];
-                // if (nY < 0 || n)
-                // {
-                //     ;
-                // }
+                if (nY < 1 || nY > N)
+                    continue;
+
+                else if (nX < 0)
+                    nX = M - 1;
+                else if (nX > M - 1)
+                    nX = 0;
+
+                if (number == gear[nY][nX])
+                {
+                    q.push({nY, nX});
+                    count++;
+                }
+            }
+
+            if (q.size() > 0)
+                q.push({i, j});
+
+            while (!q.empty())
+            {
+                Q.push(q.front());
+                q.pop();
             }
         }
     }
+
+    while (!Q.empty())
+    {
+        int y = Q.front().first, x = Q.front().second;
+        gear[y][x] = 0;
+        Q.pop();
+    }
+
+    return count;
 }
 
 void addNumber()
 {
-    ;
+    int sum = 0;
+    int count = 0;
+
+    for (int i = 1; i <= N; i++)
+    {
+        for (int j = 0; j < M; j++)
+        {
+            if (gear[i][j] != 0)
+            {
+                sum += gear[i][j];
+                count++;
+            }
+        }
+    }
+
+    double aver = (double)sum / (double)count;
+
+    for (int i = 1; i <= N; i++)
+    {
+        for (int j = 0; j < M; j++)
+        {
+            if (gear[i][j] == 0)
+                continue;
+
+            if (aver < (double)gear[i][j])
+                gear[i][j] -= 1;
+
+            else if (aver > (double)gear[i][j])
+                gear[i][j] += 1;
+        }
+    }
 }
