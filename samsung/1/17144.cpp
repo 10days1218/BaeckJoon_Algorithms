@@ -81,11 +81,6 @@ void spread()
 
 void clean()
 {
-    //←
-    // →   오른쪽 방향 화살표
-    // ↑   위쪽 화살표
-    //→
-
     //↓
     for (int i = 0; i < cleaner.r1; i++)
         maps[i + 1][0] = maps[i][0];
