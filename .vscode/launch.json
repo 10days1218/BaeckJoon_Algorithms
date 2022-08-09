@@ -20,7 +20,24 @@
       "terminal": "external"
       //"preLaunchTask": "build debug" ,
     },
-
+    {
+      "name": "c++ 디버깅",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${fileDirname}/a.out",
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+      "miDebuggerPath": "/usr/bin/gdb"
+    },
     {
       "name": "(lldb) Launch",
       "type": "cppdbg",
@@ -33,15 +50,24 @@
       "externalConsole": true,
       "MIMode": "lldb",
       "miDebuggerPath": "/usr/local/Cellar/llvm/9.0.0/bin/lldb-mi",
-      "logging": { "engineLogging": true },
+      "logging": {
+        "engineLogging": true
+      },
       "osx": {
         "command": "clang++",
-        "args": ["-Wall", "main.cpp", "-v"],
+        "args": [
+          "-Wall",
+          "main.cpp",
+          "-v"
+        ],
         "isShellCommand": true,
         "showOutput": "always",
         "problemMatcher": {
           "owner": "cpp",
-          "fileLocation": ["relative", "${workspaceRoot}"],
+          "fileLocation": [
+            "relative",
+            "${workspaceRoot}"
+          ],
           "pattern": {
             "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
             "file": 1,
